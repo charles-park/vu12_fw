@@ -20,14 +20,8 @@
 #define WDT_DISABLE()       ( GLOBAL_CFG &= ~bWDOG_EN )
 #define WDT_CLR()           ( WDOG_COUNT  = 0 )
 
-#define PROTOCOL_FWVER_STR  "@V100#"
+#define PROTOCOL_FWVER_STR  "@V011#"
 #define PROTOCOL_RESET_STR  "@WRST#"
-
-/*---------------------------------------------------------------------------*/
-// lt8619c.c code build & link flag (code size overflow)
-/*---------------------------------------------------------------------------*/
-#define __LT8619C_CODE_ENABLE__
-#define __LT8619C_FIXED_EDID__
 
 /*---------------------------------------------------------------------------*/
 // CH552 PORT Config

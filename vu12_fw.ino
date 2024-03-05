@@ -33,6 +33,14 @@ void alive_led (void)
 }
 
 /*---------------------------------------------------------------------------*/
+void touch_reset (uint8_t d)
+{
+    digitalWrite (PORT_TOUCH_RESET, LOW);
+    delay(d + 10);
+    digitalWrite (PORT_TOUCH_RESET, HIGH);
+}
+
+/*---------------------------------------------------------------------------*/
 void port_init (void)
 {
     // lcd reset
@@ -44,7 +52,7 @@ void port_init (void)
     // codec
     pinMode (PORT_CODEC_PWREN, OUTPUT); digitalWrite (PORT_CODEC_PWREN, LOW);
     // touch
-    pinMode (PORT_TOUCH_RESET, OUTPUT); digitalWrite (PORT_TOUCH_RESET, LOW);
+    pinMode (PORT_TOUCH_RESET, OUTPUT); touch_reset (100);
     // pwm
     pinMode (PORT_BACKLIGHT_PWM, OUTPUT);
     digitalWrite (PORT_BACKLIGHT_PWM, LOW);

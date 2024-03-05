@@ -49,14 +49,15 @@ void protocol_data_check    (void)
     for (i = 0; i < PROTOCOL_SIZE-1; i++)   Protocol[i] = Protocol[i+1];
     Protocol[PROTOCOL_SIZE-1] = USBSerial_read();
 
-//USBSerial_print((char)Protocol[PROTOCOL_SIZE-1]);
+USBSerial_print((char)Protocol[PROTOCOL_SIZE-1]);
 
     /* Header & Tail check */
     if ((Protocol[0] == '@') && (Protocol[PROTOCOL_SIZE-1] == '#')) {
         uint8_t data =
             (Protocol[2] - '0') * 100 + (Protocol[3] - '0') * 10 + Protocol[4] - '0';
 
-//USBSerial_print("<-IN \r\n");
+USBSerial_println("<-IN");
+USBSerial_print("OUT->");
         switch (Protocol[1]) {
             /* Digital volume request */
             case    'D':
@@ -97,9 +98,7 @@ void protocol_data_check    (void)
 
             /* Touch controller reset */
             case    'T':
-                digitalWrite (PORT_TOUCH_RESET, LOW);
-                delay (data + 10);
-                digitalWrite (PORT_TOUCH_RESET, HIGH);
+                touch_reset (data);
                 return;
             default:
                 return;

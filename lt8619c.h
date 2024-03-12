@@ -134,7 +134,7 @@ extern  void        lt8619c_bt_setting      (void);
 extern  void        lt8619c_plllock_detect  (void);
 extern  bool        lt8619c_lvds_check      (void);
 extern  void        lt8619c_lvds_detect     (void);
-extern  void        lt8619c_loop            (void);
+extern  bool        lt8619c_loop            (void);
 extern  bool        lt8619c_check_id        (void);
 extern  void        lt8619c_init            (void);
 

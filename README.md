@@ -1,6 +1,5 @@
 # vu12_fw
-저가의 ch55x chip을 사용한 LVDS2HDMI LCD Monitor control(VU12, 1920x720)  
-* Project Document : https://docs.google.com/spreadsheets/d/1HiW1aLE0fOjp_hWNbl3xYpfYre3RCjelAIYnHm_vM1g/edit#gid=2030313460
+저가의 ch55x chip을 사용한 LVDS2HDMI LCD Monitor control(VU12, 1920x720)
 
 ch55x 참조 사이트
 * <https://github.com/DeqingSun/ch55xduino>

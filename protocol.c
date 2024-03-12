@@ -49,15 +49,17 @@ void protocol_data_check    (void)
     for (i = 0; i < PROTOCOL_SIZE-1; i++)   Protocol[i] = Protocol[i+1];
     Protocol[PROTOCOL_SIZE-1] = USBSerial_read();
 
-USBSerial_print((char)Protocol[PROTOCOL_SIZE-1]);
+    USBSerial_print((char)Protocol[PROTOCOL_SIZE-1]);
+    if ((char)Protocol[PROTOCOL_SIZE-1] == '\r')
+        USBSerial_print("\n");
 
     /* Header & Tail check */
     if ((Protocol[0] == '@') && (Protocol[PROTOCOL_SIZE-1] == '#')) {
         uint8_t data =
             (Protocol[2] - '0') * 100 + (Protocol[3] - '0') * 10 + Protocol[4] - '0';
 
-USBSerial_println("<-IN");
-USBSerial_print("OUT->");
+        USBSerial_print("\r\n");
+        USBSerial_print("Resp->");
         switch (Protocol[1]) {
             /* Digital volume request */
             case    'D':

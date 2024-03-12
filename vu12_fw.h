@@ -20,14 +20,12 @@
 #define WDT_DISABLE()       ( GLOBAL_CFG &= ~bWDOG_EN )
 #define WDT_CLR()           ( WDOG_COUNT  = 0 )
 
-#define PROTOCOL_FWVER_STR  "@V011#"
+#define PROTOCOL_FWVER_STR  "@V020#"
 #define PROTOCOL_RESET_STR  "@WRST#"
 
 /*---------------------------------------------------------------------------*/
 // CH552 PORT Config
 /*---------------------------------------------------------------------------*/
-#define REF_ADC_VOLT    5000
-
 #define PORT_LCD_RESET      14
 #define PORT_LCD_CSB        15
 #define PORT_LCD_STDBY      33
@@ -64,10 +62,11 @@ enum codec_state {
 #define PERIOD_LT8619C_LOOP     1000
 
 /*---------------------------------------------------------------------------*/
-#define D_VOL_DEFAULT   0xFF    // mute
+#define D_VOL_DEFAULT   0x30    // 0 dB, 0xFF mute
 #define A_VOL_DEFAULT   0x00    // 0 dB
 #define B_VAL_DEFAULT   0x80    // middle brightness
 
+#define HDMI_SIGNAL_STABLE  1
 /*---------------------------------------------------------------------------*/
 extern  __xdata uint8_t DigitalVolume, AnalogVolume, Brightness;
 

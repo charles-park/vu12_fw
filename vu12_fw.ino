@@ -24,6 +24,7 @@
 /*---------------------------------------------------------------------------*/
 __xdata uint8_t DigitalVolume, AnalogVolume, Brightness;
 __xdata uint32_t MillisCheck = 0;
+__xdata uint8_t HDMI_Signal = 0;
 
 /*---------------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------*/
@@ -43,12 +44,18 @@ void touch_reset (uint8_t d)
 /*---------------------------------------------------------------------------*/
 void port_init (void)
 {
-    // lcd reset
-    pinMode (PORT_LCD_RESET, OUTPUT);   digitalWrite (PORT_LCD_RESET, LOW);
     // lcd csb
     pinMode (PORT_LCD_CSB, OUTPUT);     digitalWrite (PORT_LCD_CSB, HIGH);
+    // lcd reset
+    pinMode (PORT_LCD_RESET, OUTPUT);   digitalWrite (PORT_LCD_RESET, LOW);
     // lcd stdby
-    pinMode (PORT_LCD_STDBY, OUTPUT);   digitalWrite (PORT_LCD_STDBY, HIGH);
+    pinMode (PORT_LCD_STDBY, OUTPUT);   digitalWrite (PORT_LCD_STDBY, LOW);
+
+    // lcd init timing
+    delay(10);  digitalWrite (PORT_LCD_RESET, HIGH);
+    delay(50);  digitalWrite (PORT_LCD_STDBY, HIGH);
+    delay(150);
+
     // codec
     pinMode (PORT_CODEC_PWREN, OUTPUT); digitalWrite (PORT_CODEC_PWREN, LOW);
     // touch
@@ -92,25 +99,24 @@ void setup() {
     port_init ();
 
     // Wait serial port ready.
-    while (!USBSerial())    delay(100);
+    delay(1000);
 
     /* USB Serial data init, boot msg send */
+    USBSerial_println(__DATE__" " __TIME__);
     USBSerial_println("@S-OK#");
-    //    USBSerial_flush();
 
     // get platform save data from eeprom
     // DigitalVolume, AnalogVolume, Brigntness
-    eeprom_init     (false);
+    eeprom_init (false);
 
     // codec init
     tass805m_init ();
 
     // hdmi2lvds init
-    lt8619c_init ();    lt8619c_loop ();
+    lt8619c_init ();
 
     // backlight on (div = 2, 46Khz PWM clock)
-    backlight_init    (PORT_BACKLIGHT_PWM, 2);
-    backlight_control (Brightness);
+    backlight_init (PORT_BACKLIGHT_PWM, 2);
 
     /* VU12 System watchdog enable */
     GLOBAL_CFG_UNLOCK();    WDT_ENABLE();   WDT_CLR();
@@ -128,7 +134,16 @@ void loop() {
     /* lt8619c check loop (1 sec) */
     if (MillisCheck + PERIOD_LT8619C_LOOP < millis()) {
         alive_led ();
-        lt8619c_loop();
+
+        if (!lt8619c_loop()) {
+            backlight_control (0);
+            HDMI_Signal = 0;
+        } else {
+            if (HDMI_Signal > HDMI_SIGNAL_STABLE)
+                backlight_control (Brightness);
+            else
+                HDMI_Signal++;
+        }
         MillisCheck = millis ();
     }
 }

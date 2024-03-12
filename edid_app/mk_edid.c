@@ -20,7 +20,7 @@
 uint8_t ONCHIP_EDID[256] = {
     //1920*1080
     0x00, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0x00, 0x0e, 0xd4, 0x32, 0x31, 0x00, 0x88, 0x88, 0x88,
-    0x20, 0x1c, 0x01, 0x03, 0x80, 0x0c, 0x07, 0x78, 0x0a, 0x0d, 0xc9, 0xa0, 0x57, 0x47, 0x98, 0x27,
+    0x20, 0x1c, 0x01, 0x03, 0x80, 0x1d, 0x0b, 0x78, 0x0a, 0x0d, 0xc9, 0xa0, 0x57, 0x47, 0x98, 0x27,
     0x12, 0x48, 0x4c, 0x00, 0x00, 0x00, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01,
     0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x02, 0x3a, 0x80, 0x18, 0x71, 0x38, 0x2d, 0x40, 0x58, 0x2c,
     0x45, 0x00, 0x80, 0x38, 0x74, 0x00, 0x00, 0x1e, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -53,23 +53,41 @@ typedef struct {
     uint16_t vtotal;
 }   video_timing;
 
-//  52800, 50, 50, 40, 1920, 1100, 50, 20, 10, 720, 800
+#if 0
+C4 Modeline Setting:
+    hdisp, hsyncstart, hsyncend, htotal,
+    vdisp, vsyncstart, vsyncend, vtotal,
+    hsync_polarity,vsync_polarity,progress_mode
+
+https://tomverbeure.github.io/video_timings_calculator
+Parameters : None, 960, 720, 60, N, N, 8, RGB 4:4:4, N
+
+CVT Modeline        Modeline "960x720_59.72" 55.75 960 1008 1104 1248 720 723 727 748 -HSync +VSync
+CVT-RB Modeline     Modeline "960x720_59.95" 49.75 960 1008 1040 1120 720 723 727 741 +HSync -VSync
+CVT-RBv2 Modeline   Modeline "960x720_60" 46.238 960 968 1000 1040 720 727 735 741 +HSync -VSync
+Custom Modeline     Modeline "960x720_60" 45.302 960 968 1000 1040 720 727 735 741 +HSync -VSync
+#endif
+
+// https://tomverbeure.github.io/video_timings_calculator
+// Parameters
+// None, 1920, 720, 60, N, N, 8, RGB 4:4:4, N
+// CVT Timings
 const video_timing  lcd_timing = {
-    52800,  // pixel clock(Khz)
+    111750,  // pixel clock(Khz)
 
     // lcd horizontal data
-    50,     // hfp
-    50,     // hs
-    40,     // hbp
-    960,    // hact = (real view area, 960 * 2(LVDS ch) = 1920)
-    1100,   // htotal = hact + hbp + hs + hfp
+    96,     // hfp
+    192,    // hs
+    288,    // hbp
+    1920,   // hact = (real view area, 960 * 2(LVDS ch) = 1920)
+    2496,   // htotal = hact + hbp + hs + hfp
 
     // lcd vertical data
-    50,     // vfp
-    20,     // vs
-    10,     // vbp
+    3,      // vfp
+    10,     // vs
+    15,     // vbp
     720,    // vact = (real view area, 720)
-    800     // vtotal = vact + vbp + vs + vfp
+    748     // vtotal = vact + vbp + vs + vfp
 };
 
 /*---------------------------------------------------------------------------*/

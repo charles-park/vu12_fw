@@ -10,6 +10,15 @@ ch55x 참조 사이트
 arduino-cli install 참조사이트(X86)
 * <https://m.blog.naver.com/roboholic84/221815428642>
 
+Video Timings Calculator
+* https://tomverbeure.github.io/video_timings_calculator
+
+EDID Read & Check
+* https://wiki.odroid.com/accessory/display/vu_series/vu8/update_edid
+
+Custom EDID Test
+* https://wiki.odroid.com/common/hdmi_howto/custombuilt?s[]=custom&s[]=hdmi
+
 ## Install Package 
 * arduino-cli install
 ```

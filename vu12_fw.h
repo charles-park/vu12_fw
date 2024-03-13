@@ -20,7 +20,7 @@
 #define WDT_DISABLE()       ( GLOBAL_CFG &= ~bWDOG_EN )
 #define WDT_CLR()           ( WDOG_COUNT  = 0 )
 
-#define PROTOCOL_FWVER_STR  "@V020#"
+#define PROTOCOL_FWVER_STR  "@V021#"
 #define PROTOCOL_RESET_STR  "@WRST#"
 
 /*---------------------------------------------------------------------------*/
@@ -62,7 +62,8 @@ enum codec_state {
 #define PERIOD_LT8619C_LOOP     1000
 
 /*---------------------------------------------------------------------------*/
-#define D_VOL_DEFAULT   0x30    // 0 dB, 0xFF mute
+// #define D_VOL_DEFAULT   0x30    // 0 dB, 0xFF mute, 소리가 너무 큼
+#define D_VOL_DEFAULT   0x80    // -40 dB(default)
 #define A_VOL_DEFAULT   0x00    // 0 dB
 #define B_VAL_DEFAULT   0x80    // middle brightness
 

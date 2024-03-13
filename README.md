@@ -53,14 +53,14 @@ Custom EDID Test
  
 ## Compile & Download
 ```
-  root@odroid:~# git clone https://github.com/charles-park/m1s_ups
-  root@odroid:~# cd m1s_ups
+  # clone vu12_fw repo
+  root@odroid:~# git clone https://github.com/charles-park/vu12_fw
   # compile only
-  root@odroid:~/m1s_ups# arduino-cli compile -b CH55xDuino:mcs51:ch552 ups_fw
+  root@odroid:~# arduino-cli compile -b CH55xDuino:mcs51:ch552 vu12_fw
   # compile & download
-  root@odroid:~/m1s_ups# arduino-cli compile -b CH55xDuino:mcs51:ch552 ups_fw -u -p /dev/ttyACM0
+  root@odroid:~# arduino-cli compile -b CH55xDuino:mcs51:ch552 vu12_fw -u -p /dev/ttyACM0
   # download only
-  root@odroid:~/m1s_ups# arduino-cli upload -b CH55xDuino:mcs51:ch552 -i ups_fw.hex -p /dev/ttyACM0
+  root@odroid:~# arduino-cli upload -b CH55xDuino:mcs51:ch552 -i vu12_fw.hex -p /dev/ttyACM0
 
 ```
 ## ch55x 전용 tool을 사용한 download (script/download.sh 참조)
@@ -93,5 +93,5 @@ Custom EDID Test
 
 ## Hex file 생성위치
 ```
-  /tmp/arduino/sketches/***/ups_fw.hex
+  /tmp/arduino/sketches/***/vu12_fw.hex
 ```

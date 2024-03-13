@@ -44,6 +44,8 @@ void touch_reset (uint8_t d)
 /*---------------------------------------------------------------------------*/
 void port_init (void)
 {
+    // Board Alive led init
+    pinMode (PORT_ALIVE_LED, OUTPUT);   digitalWrite (PORT_ALIVE_LED, LOW);
     // lcd csb
     pinMode (PORT_LCD_CSB, OUTPUT);     digitalWrite (PORT_LCD_CSB, HIGH);
     // lcd reset
@@ -63,9 +65,6 @@ void port_init (void)
     // pwm
     pinMode (PORT_BACKLIGHT_PWM, OUTPUT);
     digitalWrite (PORT_BACKLIGHT_PWM, LOW);
-
-    // Board Alive led init
-    pinMode (PORT_ALIVE_LED, OUTPUT);   digitalWrite (PORT_ALIVE_LED, LOW);
 
     // I2C Port init (GPIO Bit-bang)
     gpio_i2c_init (PORT_I2C_SCL, PORT_I2C_SDA);
@@ -133,16 +132,15 @@ void loop() {
 
     /* lt8619c check loop (1 sec) */
     if (MillisCheck + PERIOD_LT8619C_LOOP < millis()) {
-        alive_led ();
-
         if (!lt8619c_loop()) {
-            backlight_control (0);
-            HDMI_Signal = 0;
+            backlight_control (0);  HDMI_Signal = 0;
+            digitalWrite (PORT_ALIVE_LED, LOW);
         } else {
             if (HDMI_Signal > HDMI_SIGNAL_STABLE)
                 backlight_control (Brightness);
             else
                 HDMI_Signal++;
+            alive_led ();
         }
         MillisCheck = millis ();
     }

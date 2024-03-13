@@ -28,6 +28,7 @@ void protocol_data_check    (void);
 #define PROTOCOL_SIZE   6
 __xdata unsigned char Protocol[PROTOCOL_SIZE];
 
+// #define __MSG_DEBUG__
 /*---------------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------*/
 void protocol_data_send     (char cmd, uint8_t data)
@@ -49,17 +50,21 @@ void protocol_data_check    (void)
     for (i = 0; i < PROTOCOL_SIZE-1; i++)   Protocol[i] = Protocol[i+1];
     Protocol[PROTOCOL_SIZE-1] = USBSerial_read();
 
+#if defined(__MSG_DEBUG__)
     USBSerial_print((char)Protocol[PROTOCOL_SIZE-1]);
     if ((char)Protocol[PROTOCOL_SIZE-1] == '\r')
         USBSerial_print("\n");
+#endif
 
     /* Header & Tail check */
     if ((Protocol[0] == '@') && (Protocol[PROTOCOL_SIZE-1] == '#')) {
         uint8_t data =
             (Protocol[2] - '0') * 100 + (Protocol[3] - '0') * 10 + Protocol[4] - '0';
 
+#if defined(__MSG_DEBUG__)
         USBSerial_print("\r\n");
         USBSerial_print("Resp->");
+#endif
         switch (Protocol[1]) {
             /* Digital volume request */
             case    'D':

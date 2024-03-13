@@ -28,7 +28,7 @@ void protocol_data_check    (void);
 #define PROTOCOL_SIZE   6
 __xdata unsigned char Protocol[PROTOCOL_SIZE];
 
-// #define __MSG_DEBUG__
+//#define __MSG_DEBUG__
 /*---------------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------*/
 void protocol_data_send     (char cmd, uint8_t data)
@@ -63,7 +63,6 @@ void protocol_data_check    (void)
 
 #if defined(__MSG_DEBUG__)
         USBSerial_print("\r\n");
-        USBSerial_print("Resp->");
 #endif
         switch (Protocol[1]) {
             /* Digital volume request */
@@ -106,6 +105,7 @@ void protocol_data_check    (void)
             /* Touch controller reset */
             case    'T':
                 touch_reset (data);
+                USBSerial_println(PROTOCOL_TOUCH_STR);
                 return;
             default:
                 return;

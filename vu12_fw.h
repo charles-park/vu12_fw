@@ -20,8 +20,9 @@
 #define WDT_DISABLE()       ( GLOBAL_CFG &= ~bWDOG_EN )
 #define WDT_CLR()           ( WDOG_COUNT  = 0 )
 
-#define PROTOCOL_FWVER_STR  "@V021#"
+#define PROTOCOL_FWVER_STR  "@V022#"
 #define PROTOCOL_RESET_STR  "@WRST#"
+#define PROTOCOL_TOUCH_STR  "@TRST#"
 
 /*---------------------------------------------------------------------------*/
 // CH552 PORT Config

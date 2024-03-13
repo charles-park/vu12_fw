@@ -104,9 +104,9 @@ void protocol_data_check    (void)
 
             /* Touch controller reset */
             case    'T':
+                data = data ? data : 10;
                 touch_reset (data);
-                USBSerial_println(PROTOCOL_TOUCH_STR);
-                return;
+                break;
             default:
                 return;
         }

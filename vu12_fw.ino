@@ -37,7 +37,7 @@ void alive_led (void)
 void touch_reset (uint8_t d)
 {
     digitalWrite (PORT_TOUCH_RESET, LOW);
-    delay(d + 10);
+    delay (d);
     digitalWrite (PORT_TOUCH_RESET, HIGH);
 }
 

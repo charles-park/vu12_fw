@@ -134,13 +134,13 @@ void loop() {
     if (MillisCheck + PERIOD_LT8619C_LOOP < millis()) {
         if (!lt8619c_loop()) {
             backlight_control (0);  HDMI_Signal = 0;
-            digitalWrite (PORT_ALIVE_LED, LOW);
+            alive_led ();
         } else {
             if (HDMI_Signal > HDMI_SIGNAL_STABLE)
                 backlight_control (Brightness);
             else
                 HDMI_Signal++;
-            alive_led ();
+            digitalWrite (PORT_ALIVE_LED, LOW);
         }
         MillisCheck = millis ();
     }

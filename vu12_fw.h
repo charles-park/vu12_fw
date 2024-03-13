@@ -20,7 +20,7 @@
 #define WDT_DISABLE()       ( GLOBAL_CFG &= ~bWDOG_EN )
 #define WDT_CLR()           ( WDOG_COUNT  = 0 )
 
-#define PROTOCOL_FWVER_STR  "@V023#"
+#define PROTOCOL_FWVER_STR  "@V024#"
 #define PROTOCOL_RESET_STR  "@WRST#"
 
 /*---------------------------------------------------------------------------*/

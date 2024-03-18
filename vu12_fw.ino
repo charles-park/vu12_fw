@@ -42,6 +42,15 @@ void touch_reset (uint8_t d)
 }
 
 /*---------------------------------------------------------------------------*/
+void watchdog (bool enable)
+{
+    GLOBAL_CFG_UNLOCK();
+    if (enable) WDT_ENABLE();
+    else        WDT_DISABLE();
+    WDT_CLR();
+}
+
+/*---------------------------------------------------------------------------*/
 void port_init (void)
 {
     // Board Alive led init
@@ -118,7 +127,7 @@ void setup() {
     backlight_init (PORT_BACKLIGHT_PWM, 2);
 
     /* VU12 System watchdog enable */
-    GLOBAL_CFG_UNLOCK();    WDT_ENABLE();   WDT_CLR();
+    watchdog (true);
 }
 
 /*---------------------------------------------------------------------------*/
@@ -138,8 +147,10 @@ void loop() {
         } else {
             if (HDMI_Signal > HDMI_SIGNAL_STABLE)
                 backlight_control (Brightness);
-            else
+            else {
                 HDMI_Signal++;
+                watchdog (false);   lt8619c_init ();    watchdog (true);
+            }
             digitalWrite (PORT_ALIVE_LED, LOW);
         }
         MillisCheck = millis ();

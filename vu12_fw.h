@@ -72,6 +72,7 @@ enum codec_state {
 extern  __xdata uint8_t DigitalVolume, AnalogVolume, Brightness;
 
 extern  void touch_reset (uint8_t d);
+extern  void watchdog (bool enable);
 
 /*---------------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------*/

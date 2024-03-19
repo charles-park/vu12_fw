@@ -104,7 +104,6 @@ void protocol_data_check    (void)
 
             /* Touch controller reset */
             case    'T':
-                data = data ? data : 10;
                 touch_reset (data);
                 break;
             default:

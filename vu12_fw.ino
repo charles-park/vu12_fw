@@ -37,7 +37,7 @@ void alive_led (void)
 void touch_reset (uint8_t d)
 {
     digitalWrite (PORT_TOUCH_RESET, LOW);
-    delay (d);
+    delay (d + 50);
     digitalWrite (PORT_TOUCH_RESET, HIGH);
 }
 
@@ -148,8 +148,10 @@ void loop() {
             if (HDMI_Signal > HDMI_SIGNAL_STABLE)
                 backlight_control (Brightness);
             else {
+                if (!HDMI_Signal) {
+                    watchdog (false);   lt8619c_init ();    watchdog (true);
+                }
                 HDMI_Signal++;
-                watchdog (false);   lt8619c_init ();    watchdog (true);
             }
             digitalWrite (PORT_ALIVE_LED, LOW);
         }

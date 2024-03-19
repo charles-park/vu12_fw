@@ -11,6 +11,7 @@
 /*---------------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------*/
 #include <Arduino.h>
+#include "vu12_fw.h"
 #include "backlight.h"
 
 /*---------------------------------------------------------------------------*/
@@ -44,7 +45,11 @@ uint8_t backlight_init      (uint16_t pwm_port, uint8_t div)
 /*---------------------------------------------------------------------------*/
 uint8_t backlight_control   (uint8_t brightness)
 {
-    analogWrite(PortPWM, brightness);
+    #if defined (MIN_BRIGHTNESS)
+        analogWrite(PortPWM, (brightness < MIN_BRIGHTNESS) ? MIN_BRIGHTNESS : brightness);
+    #else
+        analogWrite(PortPWM, brightness);
+    #endif
     // save backlight data
     return 1;
 }

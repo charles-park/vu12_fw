@@ -20,7 +20,7 @@
 #define WDT_DISABLE()       ( GLOBAL_CFG &= ~bWDOG_EN )
 #define WDT_CLR()           ( WDOG_COUNT  = 0 )
 
-#define PROTOCOL_FWVER_STR  "@V030#"
+#define PROTOCOL_FWVER_STR  "@V031#"
 #define PROTOCOL_RESET_STR  "@WRST#"
 
 /*---------------------------------------------------------------------------*/
@@ -67,7 +67,9 @@ enum codec_state {
 #define A_VOL_DEFAULT   0x00    // 0 dB
 #define B_VAL_DEFAULT   0x80    // middle brightness
 
-#define HDMI_SIGNAL_STABLE  1
+// #define MIN_BRIGHTNESS      10
+#define HDMI_SIGNAL_STABLE  2
+
 /*---------------------------------------------------------------------------*/
 extern  __xdata uint8_t DigitalVolume, AnalogVolume, Brightness;
 
